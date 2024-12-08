@@ -23,9 +23,9 @@ out= self.poset_pool(out)
    
 For another poset (for example the number 12):
 ```python
-from poset_utils import CustomMultiPolyActivation,  dict_posets
+from poset_utils import PosetFilter,  dict_posets
 #on the init section of the NN
-self.poset_pool = CustomMultiPolyActivation(coeffs=dict_posets[12])
+self.poset_pool = PosetPosetFilter(coeffs=dict_posets[12])
 
 #on the forward section of the NN
 out= self.poset_pool(out)

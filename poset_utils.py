@@ -9,7 +9,7 @@ import torch.nn.functional as F
 # DEFINITION OF NEW POOLING
 # -------------------------------------------------------------------------
 
-class MultiPolyReLU(torch.autograd.Function):
+class Poset_Activations(torch.autograd.Function):
     @staticmethod
     def forward(ctx, input, coeffs):
         device = input.device  # Ensure all operations are on the same device
@@ -81,17 +81,17 @@ class MultiPolyReLU(torch.autograd.Function):
     
         return grad_input, None
 
-class CustomMultiPolyActivation(nn.Module):
+class PosetFilter(nn.Module):
     def __init__(self, coeffs):
-        super(CustomMultiPolyActivation, self).__init__()
+        super(PosetFilter, self).__init__()
         self.coeffs = coeffs
     def forward(self, x):
         #print(f"input vector with shape {x.shape}")
-        return MultiPolyReLU.apply(x, self.coeffs)    
+        return Poset_Activations.apply(x, self.coeffs)    
 
 #Example use:
 '''#on the init section of the NN
-self.pool = CustomMultiPolyActivation(coeffs=[
+self.pool = PosetActivation(coeffs=[
             (0., 0.0, 0.0, 0.),  # Coefficients for f_1
             (0.0, 0., 0., 1.0),  # Coefficients for f_2
             (0., 1.0, 0.0, 0.),  # Coefficients for f_3
@@ -104,6 +104,18 @@ self.pool = CustomMultiPolyActivation(coeffs=[
 #on the forward section of the NN
 out= self.N_pool(out)
 '''
+
+filter_n = PosetFilter(coeffs=[
+            (0., 0.0, 0.0, 0.),  
+            (0.0, 0., 0., 1.0),  
+            (0., 1.0, 0.0, 0.),  
+            (0., 1.0, 0.0, 1.),  
+            (1., 1.0, 0.0, 0.),  
+            (0., 1.0, 1.0, 1.),  
+            (1., 1.0, 0.0, 1.),  
+            (1., 1.0, 1.0, 1.)   
+        ])
+
 
 dict_posets={ 15:[
             (0., 0.0, 0.0, 0.), 
@@ -387,13 +399,3 @@ dict_posets={ 15:[
         ]
 }
 
-filter_n = CustomMultiPolyActivation(coeffs=[
-            (0., 0.0, 0.0, 0.),  
-            (0.0, 0., 0., 1.0),  
-            (0., 1.0, 0.0, 0.),  
-            (0., 1.0, 0.0, 1.),  
-            (1., 1.0, 0.0, 0.),  
-            (0., 1.0, 1.0, 1.),  
-            (1., 1.0, 0.0, 1.),  
-            (1., 1.0, 1.0, 1.)   
-        ])
