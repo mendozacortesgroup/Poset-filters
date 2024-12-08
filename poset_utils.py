@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.autograd
 import torchvision
 import torchvision.transforms as transforms
-
+import torch.nn.functional as F
 # -------------------------------------------------------------------------
 # DEFINITION OF NEW POOLING
 # -------------------------------------------------------------------------
@@ -14,12 +14,20 @@ class MultiPolyReLU(torch.autograd.Function):
     def forward(ctx, input, coeffs):
         device = input.device  # Ensure all operations are on the same device
         batch_size, channels, height, width = input.shape
-        assert width % 2 == 0 and height % 2 == 0, f"Width and height must be even for halving {input.shape}"
+        pad_h = (1 if height % 2 != 0 else 0)# Dynamically add padding for odd dimensions
+        pad_w = (1 if width % 2 != 0 else 0)
+        padding = (0, pad_w, 0, pad_h)  # (left, right, top, bottom)
+        #assert width % 2 == 0 and height % 2 == 0, f"Width and height must be even for halving {input.shape}"
+
+        if pad_h > 0 or pad_w > 0:
+            input = F.pad(input, padding) #When using the CUDA backend, this operation may induce nondeterministic behaviour in its backward pass that is not easily switched off.
+            
         ctx.save_for_backward(input)
         ctx.coeffs = coeffs
+        ctx.padding = padding  # Save padding for backward pass
         # Reshape and stack input blocks for polynomial computation
         blocks = input.unfold(2, 2, 2).unfold(3, 2, 2)  # shape (batch_size, channels, height//2, width//2, 2, 2)
-        blocks = blocks.reshape(batch_size, channels, height//2, width//2, 4)  # shape (batch_size, channels, height//2, width//2, 4)
+        blocks = blocks.reshape(batch_size, channels, (height+pad_h)//2, (width+pad_w)//2, 4)  # shape (batch_size, channels, height//2, width//2, 4)
         # Send data that is outside the network to GPU
         blocks = blocks.to(device)
         coeffs = [[torch.tensor(c, device=device) for c in coeff] for coeff in coeffs]
@@ -42,11 +50,12 @@ class MultiPolyReLU(torch.autograd.Function):
         input, = ctx.saved_tensors
         coeffs = ctx.coeffs
         max_idx = ctx.max_idx
-        batch_size, channels, height, width = input.shape
+        padding = ctx.padding
+        batch_size, channels, padded_height, padded_width = input.shape #batch_size, channels, height, width = input.shape
         grad_input = torch.zeros_like(input).to(device)
         # Reshape and stack input blocks for polynomial computation
         blocks = input.unfold(2, 2, 2).unfold(3, 2, 2)  # shape (batch_size, channels, height//2, width//2, 2, 2)
-        blocks = blocks.reshape(batch_size, channels, height//2, width//2, 4)  # shape (batch_size, channels, height//2, width//2, 4)
+        blocks = blocks.reshape(batch_size, channels, padded_height//2, padded_width//2, 4)  # shape (batch_size, channels, height//2, width//2, 4)
         blocks = blocks.to(device)
         coeffs = [[torch.tensor(c, device=device) for c in coeff] for coeff in coeffs]
         # Repeat grad_output to match block size
@@ -64,7 +73,12 @@ class MultiPolyReLU(torch.autograd.Function):
             # Apply mask
             grad_input_blocks = grad_block * mask
             # Accumulate gradients
-            grad_input += grad_input_blocks.view(batch_size, channels, height//2, width//2, 2, 2).permute(0, 1, 2, 4, 3, 5).contiguous().view(batch_size, channels, height, width)
+            grad_input += grad_input_blocks.view(batch_size, channels, padded_height//2, padded_width//2, 2, 2).permute(0, 1, 2, 4, 3, 5).contiguous().view(batch_size, channels, padded_height, padded_width)
+        # Remove padding from grad_input if padding was applied
+        if padding != (0, 0, 0, 0):
+            left, right, top, bottom = padding
+            grad_input = grad_input[:, :, top:padded_height - bottom, left:padded_width - right]
+    
         return grad_input, None
 
 class CustomMultiPolyActivation(nn.Module):
