@@ -14,7 +14,7 @@ This reposity contains the code of the paper "Order theory in the context of mac
     
  
 * **Example Usage**: 
-For the poset {w<x>y<z} :
+For the poset {w<x>y<z} (N):
 ```python
 from poset_utils import filter_n 
 #on the init section of the NN
@@ -33,6 +33,14 @@ self.poset_pool = CustomMultiPolyActivation(coeffs=dict_posets[12])
 #on the forward section of the NN
 out= self.poset_pool(out)
 ```
+The index of the poset is the row in the following table, starting from 0 (the slowest) to 14 (the fastest):
+
+  ![standart](img/table.png)
+
+1 corresponds to the disjoint union of points/cube.
+
+13 corresponds to the four chain/simplex.
+
 
 Test:
 ```python
@@ -54,9 +62,6 @@ print(filter_n.forward(input_tensor))
 ```
 
 
-The index of the poset is the row in the following table, starting from 0 the slowest to 14 the fastest:
-
-  ![standart](img/table.png)
 
 
 * **Getting Started**
