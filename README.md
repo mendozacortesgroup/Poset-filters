@@ -84,10 +84,11 @@ The index of the poset is the row in the following table, starting from 0 the sl
     The combination ReLU followed by a poset filter seems to work well.
 
 * **Colophon**
-  - Credits -- code and algorithm: Eric Dolores Cuenca and Susana Lopez Moreno.
+  - Credits -- code, algorithm, implementation/deployment, testing and and overall direction: Eric Dolores Cuenca and Susana Lopez Moreno. Principal Investigator: Jose L. Mendoza-Cortes.  
   - Copyright and License -- see [LICENSE](somefile) file.
   - How to contribute: .
   - This project has received funding from the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (2022R1A5A1033624, 2021R1A2B5B03087097).
+  - This work was supported in part through computational resources and services provided by the Institute for Cyber-Enabled Research at Michigan State University
   - References:  https://arxiv.org/abs/
   - How to cite this project:
 
