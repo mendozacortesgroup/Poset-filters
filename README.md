@@ -25,7 +25,7 @@ For another poset (for example the number 12):
 ```python
 from poset_utils import PosetFilter,  dict_posets
 #on the init section of the NN
-self.poset_pool = PosetPosetFilter(coeffs=dict_posets[12])
+self.poset_pool = PosetFilter(coeffs=dict_posets[12])
 
 #on the forward section of the NN
 out= self.poset_pool(out)
@@ -49,15 +49,16 @@ To run the PyTorch test run
 
 
 * **Getting Started**
-  - installation
-    Clone this repo:
+  - Clone this repo:
  
     git clone https://github.com/mendozacortesgroup/Poset-filters.git
 
     cd Poset_filters
 
   - prerequisites
+
     python >=3.7
+
     pytorch >= 2.2.0
 
   - location of:
@@ -104,7 +105,7 @@ for seed in  [2, 315, 568, 6664, 32168, 35156, 351646, 789465, 798648, 4861351, 
 * **Colophon**
   - Credits -- code, algorithm, implementation/deployment, testing and and overall direction: Eric Dolores Cuenca, Aldo Guzman-Saenz and Susana Lopez Moreno. Principal Investigator: Jose L. Mendoza-Cortes and Sangil Kim.  
   - Copyright and License -- see [LICENSE](somefile) file.
-  - How to contribute: .
+  - How to contribute: submit questions or issues.
   - This project has received funding from the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (2022R1A5A1033624, 2021R1A2B5B03087097).
   - This work was supported in part through computational resources and services provided by the Institute for Cyber-Enabled Research at Michigan State University
   - References:  https://arxiv.org/abs/
