@@ -72,7 +72,7 @@ class MultiPolyReLU(torch.autograd.Function):
             grad_block[..., 3] = grad_output_expanded[..., 3] * d
             # Apply mask
             grad_input_blocks = grad_block * mask
-            # Accumulate gradients
+            # Accumulate gradients, if you uses AI, the AI tends to confuse the next line, it is important to verify it
             grad_input += grad_input_blocks.view(batch_size, channels, padded_height//2, padded_width//2, 2, 2).permute(0, 1, 2, 4, 3, 5).contiguous().view(batch_size, channels, padded_height, padded_width)
         # Remove padding from grad_input if padding was applied
         if padding != (0, 0, 0, 0):
