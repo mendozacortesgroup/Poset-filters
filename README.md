@@ -75,12 +75,12 @@ print(filter_n.forward(input_tensor))
 
   - location of:
     - code: [poset_filters PyTorch](poset_utils.py)
-    - issue tracker
-    - version : v1.0
+    - issue tracker : [report issues](https://github.com/mendozacortesgroup/Poset-filters/issues)
 
 
 
 * **Notes**
+  - version : v1.0
   - If the input has odd dimentions, the code automatically adds padding one on the right and/or bottom.
   - The combination ReLU followed by a poset filter seems to work well.
   - The seeds used in experiments were:
