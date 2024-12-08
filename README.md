@@ -39,23 +39,10 @@ The index of the poset is the row in the following table, starting from 0 (the s
 13 corresponds to the four chain/simplex.
 
 
-Test:
-```python
-import torch
-from poset_utils import filter_n 
-
-input_tensor = torch.ones(1, 3,8, 8)
-input_tensor[0,0,0::2,0::2]=-1 #the simplex 4 should work here
-input_tensor[0,1,0::2,:]=-1 #the simplex 0 or 4 should work here
-input_tensor[0,2,1::2,:]=-1
-input_tensor[0,2,:,0::2]=-1 #the simplex 1 should work here
-
-#input_tensor[0,2,0::2,:]=-1 #the simplex should work here
-print('We make an input that has 3 layers and each layer has different patterns.')
-print(input_tensor)
-print("output:")
-print(filter_n.forward(input_tensor))
-#should return a matrix with only the value 3, and two matrices of only 1's.
+* **Test**
+To run the PyTorch test run
+```bash
+ python -m unittest  test/test_pytorch.py
 ```
 
 
