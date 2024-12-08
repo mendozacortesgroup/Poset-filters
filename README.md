@@ -72,6 +72,9 @@ To run the PyTorch test run
   - If the input has odd dimentions, the code automatically adds padding one on the right and/or bottom.
   - The combination ReLU followed by a poset filter seems to work well.
   - The seeds used in experiments were:
+
+  If the experiment was repeated 14 times:   
+
 ```python
 import torch
 import numpy as np
@@ -100,12 +103,13 @@ for seed in  [2, 315, 568, 6664, 32168, 35156, 351646, 789465, 798648, 4861351, 
         transform=testTransform),
         batch_size=batchSz, shuffle=False, worker_init_fn=seed_worker, generator=g, **kwargs)
 ```
+  If the experiment was not repeated 14 times (example cross val), the seed value was 2 in the previous code.
 
 
 * **Colophon**
   - Credits -- code, algorithm, implementation/deployment, testing and and overall direction: Eric Dolores Cuenca, Aldo Guzman-Saenz and Susana Lopez Moreno. Principal Investigator: Jose L. Mendoza-Cortes and Sangil Kim.  
   - Copyright and License -- see [LICENSE](somefile) file.
-  - How to contribute: submit questions or issues.
+  - How to contribute: submit request or issues.
   - This project has received funding from the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (2022R1A5A1033624, 2021R1A2B5B03087097).
   - This work was supported in part through computational resources and services provided by the Institute for Cyber-Enabled Research at Michigan State University
   - References:  https://arxiv.org/abs/
