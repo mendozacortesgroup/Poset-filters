@@ -61,7 +61,7 @@ The index of the poset is the row in the following table, note that posets with 
     The combination ReLU followed by a poset filter seems to work well.
 
 * **Colophon**
-  - Credits -- code and algorithm: Eric Dolores Cuenca and Susana Lopez Moreno.
+  - Credits -- code, algorithm and implementation deployment: Eric Dolores Cuenca and Susana Lopez Moreno.
   - Copyright and License -- see [LICENSE](somefile) file.
   - How to contribute: .
   - This project has received funding from the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (No. 2020R1C1C1A01008261).
