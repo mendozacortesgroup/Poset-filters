@@ -115,7 +115,7 @@ for seed in  [2, 315, 568, 6664, 32168, 35156, 351646, 789465, 798648, 4861351, 
 
 
 * **Colophon**
-  - Credits -- code, algorithm, implementation/deployment, testing and and overall direction: Eric Dolores Cuenca, Aldo Guzman-Saenz and Susana Lopez Moreno. Principal Investigator: Jose L. Mendoza-Cortes and Sangil Kim.  
+  - Credits -- code, algorithm, implementation/deployment, testing and and overall direction: Eric Dolores Cuenca, Aldo Guzman-Saenz and Susana Lopez Moreno. Principal Investigator: Sangil Kim and Jose L. Mendoza-Cortes.  
   - Copyright and License -- see [LICENSE](https://github.com/mendozacortesgroup/Poset-filters/tree/main?tab=MIT-1-ov-file#readme) file.
   - How to contribute: submit issues.
   - This project has received funding from the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (2022R1A5A1033624, 2021R1A2B5B03087097).
