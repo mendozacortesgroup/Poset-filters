@@ -42,7 +42,7 @@ The index of the poset is the row in the following table, starting from 0 (the s
 * **Test**
 To run the PyTorch test run
 ```bash
- python -m unittest  test/test_pytorch.py
+ python -m unittest  test/test.py
 
 ```
 The tests for **forward propagation** use the `poset_utils.py` file.
